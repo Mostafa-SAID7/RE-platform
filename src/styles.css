@@ -84,59 +84,6 @@ body {
   .input-field {
     @apply px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors;
   }
-
-  /* Material Datepicker Component Styles - Centralized with Tailwind */
-  .mat-calendar {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-lg dark:shadow-xl p-4;
-  }
-
-  .mat-calendar-body {
-    @apply p-2;
-  }
-
-  .mat-calendar-body-cell {
-    @apply text-gray-700 dark:text-gray-300 p-1;
-  }
-
-  .mat-calendar-body-cell-content {
-    @apply rounded w-8 h-8 flex items-center justify-center;
-  }
-
-  .mat-calendar-body-selected {
-    @apply bg-blue-600 text-white rounded;
-  }
-
-  .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-    @apply border border-blue-600;
-  }
-
-  .mat-calendar-body-label {
-    @apply text-gray-700 dark:text-gray-300 p-2;
-  }
-
-  .mat-calendar-period-button {
-    @apply text-gray-700 dark:text-gray-300 p-2;
-  }
-
-  .mat-calendar-arrow {
-    @apply border-gray-700 dark:border-gray-300;
-  }
-
-  .mat-datepicker-toggle-default-icon {
-    @apply text-gray-500 dark:text-gray-400;
-  }
-
-  .mat-datepicker-panel {
-    @apply bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700;
-  }
-
-  .mat-calendar-header {
-    @apply p-2;
-  }
-
-  .mat-calendar-body-row {
-    @apply flex justify-center;
-  }
 }
 
 /* Animation utilities */
@@ -278,86 +225,6 @@ input[type="date"]::-moz-calendar-picker-indicator:hover {
   opacity: 1;
 }
 
-/* Material Datepicker Overlay Positioning */
-.cdk-overlay-pane {
-  z-index: 9999 !important;
-  position: fixed !important;
-}
-
-.mat-datepicker-container {
-  z-index: 9999 !important;
-}
-
-.cdk-overlay-connected-position-bounding-box {
-  position: fixed !important;
-}
-
-.cdk-overlay-pane.mat-datepicker-panel {
-  max-width: none !important;
-}
-
-
-/* Material Calendar Content Overflow Fix */
-.mat-calendar-content {
-  @apply overflow-visible;
-}
-
-.mat-calendar-body {
-  @apply overflow-visible;
-}
-
-.mat-calendar-table {
-  @apply w-full border-collapse;
-}
-
-.mat-calendar-table tbody {
-  @apply block;
-}
-
-.mat-calendar-table tr {
-  @apply flex justify-between mb-1;
-}
-
-.mat-calendar-table td {
-  @apply flex-1 text-center;
-}
-
-/* Ensure datepicker panel has proper sizing */
-.mat-datepicker-panel {
-  min-width: 320px !important;
-  max-width: 400px !important;
-}
-
-.mat-datepicker-panel-above {
-  margin-bottom: 8px;
-}
-
-.mat-datepicker-panel-below {
-  margin-top: 8px;
-}
-
-
-/* Material Datepicker Backdrop - Close on click outside */
-.cdk-overlay-backdrop {
-  @apply cursor-pointer;
-}
-
-.cdk-overlay-backdrop.cdk-overlay-backdrop-show {
-  @apply opacity-0 pointer-events-auto;
-}
-
-/* Ensure datepicker closes on backdrop click */
-.cdk-overlay-pane.mat-datepicker-panel {
-  pointer-events: auto;
-}
-
-/* Add click handler for backdrop */
-.cdk-overlay-backdrop.cdk-overlay-backdrop-show {
-  background-color: transparent;
-}
-
-
-
 /* Sidebar Scrollbar Hiding */
 aside.w-20 {
   overflow: hidden !important;
@@ -371,7 +238,6 @@ aside.w-20 {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 
 /* Header and Sidebar Animations */
 @keyframes slideInFromTop {
@@ -413,4 +279,86 @@ aside.w-20 {
 
 .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background-color: rgb(75, 85, 99);
+}
+
+/* PrimeNG Tailwind Integration */
+@layer components {
+  /* PrimeNG Button Styling */
+  .p-button {
+    @apply transition-colors duration-200;
+  }
+
+  .p-button.p-button-primary {
+    @apply bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700;
+  }
+
+  .p-button.p-button-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600;
+  }
+
+  /* PrimeNG Input Styling */
+  .p-inputtext {
+    @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700;
+  }
+
+  .p-inputtext:focus {
+    @apply ring-2 ring-blue-500 dark:ring-blue-400;
+  }
+
+  /* PrimeNG Select Styling */
+  .p-select {
+    @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-700;
+  }
+
+  /* PrimeNG Card Styling */
+  .p-card {
+    @apply bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700;
+  }
+
+  /* PrimeNG Table Styling */
+  .p-datatable {
+    @apply bg-white dark:bg-gray-800;
+  }
+
+  .p-datatable .p-datatable-thead > tr > th {
+    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white border-gray-200 dark:border-gray-700;
+  }
+
+  .p-datatable .p-datatable-tbody > tr {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    @apply text-gray-900 dark:text-white;
+  }
+
+  /* PrimeNG Dialog Styling */
+  .p-dialog .p-dialog-header {
+    @apply bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700;
+  }
+
+  .p-dialog .p-dialog-content {
+    @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
+  }
+
+  /* PrimeNG Message Styling */
+  .p-message {
+    @apply bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700;
+  }
+
+  .p-message.p-message-info {
+    @apply bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800;
+  }
+
+  .p-message.p-message-success {
+    @apply bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800;
+  }
+
+  .p-message.p-message-warning {
+    @apply bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800;
+  }
+
+  .p-message.p-message-error {
+    @apply bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800;
+  }
 }

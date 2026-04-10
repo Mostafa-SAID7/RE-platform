@@ -5,7 +5,6 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
-import Aura from 'primeng/themes/aura';
 
 import { routes } from './app.routes';
 import { authInterceptor, errorInterceptor, loggingInterceptor } from './interceptors';
@@ -26,14 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),
-    providePrimeNG({
-      theme: {
-        preset: Aura,
-        options: {
-          darkModeSelector: '.dark'
-        }
-      }
-    }),
+    providePrimeNG(),
     provideHttpClient(
       withInterceptors([
         mockHttpInterceptor,  // Mock HTTP responses for development
