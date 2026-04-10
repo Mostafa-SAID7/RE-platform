@@ -8,7 +8,6 @@
 export { InputGroupModule } from 'primeng/inputgroup';
 export { InputTextModule } from 'primeng/inputtext';
 export { InputNumberModule } from 'primeng/inputnumber';
-export { InputTextareaModule } from 'primeng/inputtextarea';
 export { PasswordModule } from 'primeng/password';
 export { CheckboxModule } from 'primeng/checkbox';
 export { RadioButtonModule } from 'primeng/radiobutton';
@@ -48,4 +47,3 @@ export { BadgeModule } from 'primeng/badge';
 export { ChartModule } from 'primeng/chart';
 export { FileUploadModule } from 'primeng/fileupload';
 export { RippleModule } from 'primeng/ripple';
-export { AnimateModule } from 'primeng/animate';
