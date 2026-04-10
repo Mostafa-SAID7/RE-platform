@@ -1,7 +1,9 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { InputComponent, CheckboxComponent, ButtonComponent } from '../../../shared/ui';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ButtonModule } from 'primeng/button';
 
 export interface PropertyFilters {
   priceRange: { min: number; max: number };
@@ -14,7 +16,7 @@ export interface PropertyFilters {
 @Component({
   selector: 'app-filter-panel',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputComponent, CheckboxComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, InputNumberModule, CheckboxModule, ButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
@@ -30,20 +32,18 @@ export interface PropertyFilters {
       <fieldset class="border-0 p-0 m-0 mb-6">
         <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Price Range</legend>
         <div class="flex flex-col sm:flex-row gap-2">
-          <app-input
-            id="minPrice"
-            type="number"
-            placeholder="Min price"
+          <p-inputNumber
             [(ngModel)]="minPrice"
+            placeholder="Min price"
+            [useGrouping]="false"
             class="flex-1">
-          </app-input>
-          <app-input
-            id="maxPrice"
-            type="number"
-            placeholder="Max price"
+          </p-inputNumber>
+          <p-inputNumber
             [(ngModel)]="maxPrice"
+            placeholder="Max price"
+            [useGrouping]="false"
             class="flex-1">
-          </app-input>
+          </p-inputNumber>
         </div>
       </fieldset>
 
@@ -51,24 +51,30 @@ export interface PropertyFilters {
       <fieldset class="border-0 p-0 m-0 mb-6">
         <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Property Type</legend>
         <div class="space-y-2">
-          <app-checkbox
-            id="residential"
-            label="Residential"
-            [(ngModel)]="selectedTypes"
-            value="residential">
-          </app-checkbox>
-          <app-checkbox
-            id="commercial"
-            label="Commercial"
-            [(ngModel)]="selectedTypes"
-            value="commercial">
-          </app-checkbox>
-          <app-checkbox
-            id="mixed-use"
-            label="Mixed-Use"
-            [(ngModel)]="selectedTypes"
-            value="mixed-use">
-          </app-checkbox>
+          <div class="flex items-center">
+            <p-checkbox
+              [(ngModel)]="selectedTypes"
+              value="residential"
+              [binary]="false">
+            </p-checkbox>
+            <label class="ml-2 text-sm text-gray-700 dark:text-gray-300">Residential</label>
+          </div>
+          <div class="flex items-center">
+            <p-checkbox
+              [(ngModel)]="selectedTypes"
+              value="commercial"
+              [binary]="false">
+            </p-checkbox>
+            <label class="ml-2 text-sm text-gray-700 dark:text-gray-300">Commercial</label>
+          </div>
+          <div class="flex items-center">
+            <p-checkbox
+              [(ngModel)]="selectedTypes"
+              value="mixed-use"
+              [binary]="false">
+            </p-checkbox>
+            <label class="ml-2 text-sm text-gray-700 dark:text-gray-300">Mixed-Use</label>
+          </div>
         </div>
       </fieldset>
 
@@ -76,34 +82,40 @@ export interface PropertyFilters {
       <fieldset class="border-0 p-0 m-0 mb-6">
         <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Occupancy Status</legend>
         <div class="space-y-2">
-          <app-checkbox
-            id="occupied"
-            label="Occupied"
-            [(ngModel)]="selectedStatuses"
-            value="occupied">
-          </app-checkbox>
-          <app-checkbox
-            id="vacant"
-            label="Vacant"
-            [(ngModel)]="selectedStatuses"
-            value="vacant">
-          </app-checkbox>
-          <app-checkbox
-            id="maintenance"
-            label="Maintenance"
-            [(ngModel)]="selectedStatuses"
-            value="maintenance">
-          </app-checkbox>
+          <div class="flex items-center">
+            <p-checkbox
+              [(ngModel)]="selectedStatuses"
+              value="occupied"
+              [binary]="false">
+            </p-checkbox>
+            <label class="ml-2 text-sm text-gray-700 dark:text-gray-300">Occupied</label>
+          </div>
+          <div class="flex items-center">
+            <p-checkbox
+              [(ngModel)]="selectedStatuses"
+              value="vacant"
+              [binary]="false">
+            </p-checkbox>
+            <label class="ml-2 text-sm text-gray-700 dark:text-gray-300">Vacant</label>
+          </div>
+          <div class="flex items-center">
+            <p-checkbox
+              [(ngModel)]="selectedStatuses"
+              value="maintenance"
+              [binary]="false">
+            </p-checkbox>
+            <label class="ml-2 text-sm text-gray-700 dark:text-gray-300">Maintenance</label>
+          </div>
         </div>
       </fieldset>
 
       <!-- Apply Button -->
-      <app-button
+      <p-button
         label="Apply Filters"
-        variant="primary"
-        [fullWidth]="true"
-        (click)="applyFilters()">
-      </app-button>
+        icon="pi pi-check"
+        (click)="applyFilters()"
+        class="w-full">
+      </p-button>
     </div>
   `,
   styles: [`

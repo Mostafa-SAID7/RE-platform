@@ -4,7 +4,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { providePrimeNG } from 'primeng/config';
+import Aura from 'primeng/themes/aura';
 
 import { routes } from './app.routes';
 import { authInterceptor, errorInterceptor, loggingInterceptor } from './interceptors';
@@ -25,7 +26,14 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),
-    { provide: MAT_DATE_LOCALE, useValue: 'en-US' },
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: '.dark'
+        }
+      }
+    }),
     provideHttpClient(
       withInterceptors([
         mockHttpInterceptor,  // Mock HTTP responses for development

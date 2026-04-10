@@ -6,12 +6,28 @@ import { Observable } from 'rxjs';
 import { WorkOrderService } from '../../services/work-order.service';
 import { selectWorkOrders, selectWorkOrdersLoading } from '../../store/work-orders/work-orders.selectors';
 import { loadWorkOrders } from '../../store/work-orders/work-orders.actions';
-import { InputComponent, TextareaComponent, SelectComponent, ButtonComponent } from '../../shared/ui';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { BadgeModule } from 'primeng/badge';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-work-order',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputComponent, TextareaComponent, SelectComponent, ButtonComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    SelectModule,
+    ButtonModule,
+    DialogModule,
+    TableModule,
+    BadgeModule,
+    TooltipModule
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="p-6 bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-200">
@@ -22,105 +38,124 @@ import { InputComponent, TextareaComponent, SelectComponent, ButtonComponent } f
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Work Orders</h1>
             <p class="text-gray-600 dark:text-gray-400 mt-2">Manage maintenance and repairs</p>
           </div>
-          <app-button
+          <p-button
             label="Create Work Order"
-            variant="primary"
+            icon="pi pi-plus"
             (click)="openCreateForm()">
-          </app-button>
+          </p-button>
         </div>
 
-        <!-- Create Form Modal -->
-        <div *ngIf="showCreateForm()" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg dark:shadow-xl p-6 max-w-md w-full border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Create Work Order</h2>
-            <form [formGroup]="workOrderForm" (ngSubmit)="submitWorkOrder()" class="space-y-4">
-              <app-select
+        <!-- Create Form Dialog -->
+        <p-dialog
+          [(visible)]="showCreateForm"
+          header="Create Work Order"
+          [modal]="true"
+          [style]="{ width: '50vw' }">
+          <form [formGroup]="workOrderForm" (ngSubmit)="submitWorkOrder()" class="space-y-4">
+            <div class="field">
+              <label for="propertyId" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Property</label>
+              <p-select
                 id="propertyId"
-                label="Property"
-                placeholder="Select Property"
                 formControlName="propertyId"
                 [options]="propertyOptions"
-                [required]="true">
-              </app-select>
-              <app-textarea
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Select Property"
+                [showClear]="true">
+              </p-select>
+            </div>
+            <div class="field">
+              <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
+              <textarea pInputTextarea
                 id="description"
-                label="Description"
-                placeholder="Enter work order description"
                 formControlName="description"
-                [required]="true">
-              </app-textarea>
-              <app-select
+                placeholder="Enter work order description"
+                rows="4"
+                class="w-full">
+              </textarea>
+            </div>
+            <div class="field">
+              <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Priority</label>
+              <p-select
                 id="priority"
-                label="Priority"
                 formControlName="priority"
                 [options]="priorityOptions"
-                [required]="true">
-              </app-select>
-              <app-input
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Select Priority">
+              </p-select>
+            </div>
+            <div class="field">
+              <label for="estimatedCost" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Estimated Cost</label>
+              <input pInputText
                 id="estimatedCost"
                 type="number"
-                label="Estimated Cost"
-                placeholder="0.00"
                 formControlName="estimatedCost"
-                [required]="true">
-              </app-input>
-              <div class="flex gap-4">
-                <app-button
-                  label="Create"
-                  type="submit"
-                  variant="primary"
-                  [fullWidth]="true">
-                </app-button>
-                <app-button
-                  label="Cancel"
-                  type="button"
-                  variant="secondary"
-                  [fullWidth]="true"
-                  (click)="closeCreateForm()">
-                </app-button>
-              </div>
-            </form>
-          </div>
-        </div>
+                placeholder="0.00"
+                class="w-full">
+            </div>
+            <div class="flex gap-4 pt-4">
+              <p-button
+                label="Create"
+                type="submit"
+                [disabled]="!workOrderForm.valid">
+              </p-button>
+              <p-button
+                label="Cancel"
+                severity="secondary"
+                (click)="closeCreateForm()">
+              </p-button>
+            </div>
+          </form>
+        </p-dialog>
 
         <!-- Work Orders List -->
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-          <table class="w-full">
-            <thead class="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-              <tr>
-                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">ID</th>
-                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Property</th>
-                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Description</th>
-                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Priority</th>
-                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Status</th>
-                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Cost</th>
-                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-              <tr *ngFor="let order of (workOrders$ | async)" class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">{{ order.id }}</td>
-                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">{{ order.propertyAddress }}</td>
-                <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">{{ order.description }}</td>
-                <td class="px-6 py-4 text-sm">
-                  <span [ngClass]="getPriorityClass(order.priority)" class="px-3 py-1 rounded-full text-xs font-semibold">
-                    {{ order.priority }}
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-sm">
-                  <span [ngClass]="getStatusClass(order.status)" class="px-3 py-1 rounded-full text-xs font-semibold">
-                    {{ order.status }}
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">{{ order.estimatedCost | currency }}</td>
-                <td class="px-6 py-4 text-sm">
-                  <button class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 mr-4 transition-colors">Edit</button>
-                  <button class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 transition-colors">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <p-table [value]="(workOrders$ | async) || []" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+              <th pSortableColumn="propertyAddress">Property <p-sortIcon field="propertyAddress"></p-sortIcon></th>
+              <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+              <th pSortableColumn="priority">Priority <p-sortIcon field="priority"></p-sortIcon></th>
+              <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+              <th pSortableColumn="estimatedCost">Cost <p-sortIcon field="estimatedCost"></p-sortIcon></th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.propertyAddress }}</td>
+              <td>{{ order.description }}</td>
+              <td>
+                <p-badge [value]="order.priority" [severity]="getPrioritySeverity(order.priority)"></p-badge>
+              </td>
+              <td>
+                <p-badge [value]="order.status" [severity]="getStatusSeverity(order.status)"></p-badge>
+              </td>
+              <td>{{ order.estimatedCost | currency }}</td>
+              <td>
+                <p-button
+                  icon="pi pi-pencil"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="info"
+                  pTooltip="Edit"
+                  tooltipPosition="top"
+                  class="mr-2">
+                </p-button>
+                <p-button
+                  icon="pi pi-trash"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="danger"
+                  pTooltip="Delete"
+                  tooltipPosition="top">
+                </p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
   `
@@ -136,7 +171,6 @@ export class WorkOrderComponent implements OnInit {
   showCreateForm = signal<boolean>(false);
 
   propertyOptions = [
-    { value: '', label: 'Select Property' },
     { value: 'prop1', label: 'Property 1' },
     { value: 'prop2', label: 'Property 2' },
     { value: 'prop3', label: 'Property 3' }
@@ -180,23 +214,23 @@ export class WorkOrderComponent implements OnInit {
     }
   }
 
-  getPriorityClass(priority: string): string {
-    const classes: { [key: string]: string } = {
-      low: 'bg-blue-100 text-blue-800',
-      medium: 'bg-yellow-100 text-yellow-800',
-      high: 'bg-orange-100 text-orange-800',
-      urgent: 'bg-red-100 text-red-800'
+  getPrioritySeverity(priority: string): 'info' | 'warn' | 'danger' | 'success' {
+    const severityMap: { [key: string]: 'info' | 'warn' | 'danger' | 'success' } = {
+      low: 'info',
+      medium: 'warn',
+      high: 'danger',
+      urgent: 'danger'
     };
-    return classes[priority] || 'bg-gray-100 text-gray-800';
+    return severityMap[priority] || 'info';
   }
 
-  getStatusClass(status: string): string {
-    const classes: { [key: string]: string } = {
-      assigned: 'bg-blue-100 text-blue-800',
-      'in-progress': 'bg-yellow-100 text-yellow-800',
-      completed: 'bg-green-100 text-green-800',
-      cancelled: 'bg-red-100 text-red-800'
+  getStatusSeverity(status: string): 'info' | 'warn' | 'danger' | 'success' {
+    const severityMap: { [key: string]: 'info' | 'warn' | 'danger' | 'success' } = {
+      assigned: 'info',
+      'in-progress': 'warn',
+      completed: 'success',
+      cancelled: 'danger'
     };
-    return classes[status] || 'bg-gray-100 text-gray-800';
+    return severityMap[status] || 'info';
   }
 }

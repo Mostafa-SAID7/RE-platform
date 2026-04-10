@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { CheckboxComponent } from '../../../shared/ui';
+import { CheckboxModule } from 'primeng/checkbox';
 
 interface Metric {
   id: string;
@@ -11,18 +11,19 @@ interface Metric {
 @Component({
   selector: 'app-metrics-selector',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CheckboxComponent],
+  imports: [CommonModule, ReactiveFormsModule, CheckboxModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <fieldset class="border-0 p-0 m-0">
       <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Metrics</legend>
       <div class="space-y-2">
-        <app-checkbox
-          *ngFor="let metric of metrics"
-          [id]="metric.id"
-          [label]="metric.label"
-          [formControl]="getMetricControl(metric.id)">
-        </app-checkbox>
+        <div *ngFor="let metric of metrics" class="flex items-center">
+          <p-checkbox
+            [formControl]="getMetricControl(metric.id)"
+            [binary]="true">
+          </p-checkbox>
+          <label class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ metric.label }}</label>
+        </div>
       </div>
     </fieldset>
   `

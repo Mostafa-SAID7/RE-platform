@@ -1,11 +1,14 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
+import { BadgeModule } from 'primeng/badge';
 import { Property } from '../../../models/property.model';
 
 @Component({
   selector: 'app-property-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, CheckboxModule, BadgeModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-lg hover:shadow-lg dark:hover:shadow-xl transition-all duration-200 overflow-hidden cursor-pointer border border-gray-200 dark:border-gray-700"
@@ -23,10 +26,7 @@ import { Property } from '../../../models/property.model';
         
         <!-- Status Badge -->
         <div class="absolute top-3 right-3">
-          <span class="px-3 py-1 rounded-full text-xs font-semibold"
-                [ngClass]="getStatusClass()">
-            {{ property.status | titlecase }}
-          </span>
+          <p-badge [value]="property.status | titlecase" [severity]="getStatusSeverity()"></p-badge>
         </div>
       </div>
 
@@ -70,13 +70,13 @@ import { Property } from '../../../models/property.model';
 
         <!-- Checkbox for bulk selection -->
         <div class="mt-4 flex items-center">
-          <input type="checkbox"
-                 [id]="'select-' + property.id"
-                 [checked]="isSelected"
-                 (change)="toggleSelection($event)"
-                 (click)="$event.stopPropagation()"
-                 class="w-4 h-4 text-blue-600 dark:text-blue-400 rounded accent-blue-600 dark:accent-blue-400">
-          <label [for]="'select-' + property.id" class="ml-2 text-sm text-gray-600 dark:text-gray-400">Select for bulk action</label>
+          <p-checkbox
+            [(ngModel)]="isSelected"
+            (ngModelChange)="toggleSelection($event)"
+            (click)="$event.stopPropagation()"
+            [binary]="true">
+          </p-checkbox>
+          <label class="ml-2 text-sm text-gray-600 dark:text-gray-400">Select for bulk action</label>
         </div>
       </div>
     </div>
@@ -97,17 +97,16 @@ export class PropertyCardComponent {
     this.propertySelected.emit(this.property);
   }
 
-  toggleSelection(event: Event): void {
-    event.stopPropagation();
-    this.selectionChanged.emit(!this.isSelected);
+  toggleSelection(value: boolean): void {
+    this.selectionChanged.emit(value);
   }
 
-  getStatusClass(): string {
-    const statusMap = {
-      active: 'bg-green-100 text-green-800',
-      inactive: 'bg-red-100 text-red-800',
-      maintenance: 'bg-yellow-100 text-yellow-800'
+  getStatusSeverity(): 'success' | 'danger' | 'warn' | 'info' {
+    const severityMap: { [key: string]: 'success' | 'danger' | 'warn' | 'info' } = {
+      active: 'success',
+      inactive: 'danger',
+      maintenance: 'warn'
     };
-    return statusMap[this.property.status as keyof typeof statusMap] || 'bg-gray-100 text-gray-800';
+    return severityMap[this.property.status as keyof typeof severityMap] || 'info';
   }
 }

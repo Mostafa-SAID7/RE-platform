@@ -1,5 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 
 interface ReportRecord {
   name: string;
@@ -10,35 +12,45 @@ interface ReportRecord {
 @Component({
   selector: 'app-report-history',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TableModule, ButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-      <div class="p-6 border-b border-gray-200 dark:border-gray-800">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Report History</h2>
-      </div>
-      <table class="w-full">
-        <thead class="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-          <tr>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Report Name</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Type</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Generated</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-          <tr *ngFor="let report of reports" class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-            <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">{{ report.name }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">{{ report.type }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">{{ report.generated }}</td>
-            <td class="px-6 py-4 text-sm">
-              <button class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 mr-4 transition-colors">Download</button>
-              <button class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 transition-colors">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <p-table [value]="reports" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">Report Name <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="type">Type <p-sortIcon field="type"></p-sortIcon></th>
+          <th pSortableColumn="generated">Generated <p-sortIcon field="generated"></p-sortIcon></th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-report>
+        <tr>
+          <td>{{ report.name }}</td>
+          <td>{{ report.type }}</td>
+          <td>{{ report.generated }}</td>
+          <td>
+            <p-button
+              icon="pi pi-download"
+              [rounded]="true"
+              [text]="true"
+              severity="info"
+              pTooltip="Download"
+              tooltipPosition="top"
+              class="mr-2">
+            </p-button>
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              pTooltip="Delete"
+              tooltipPosition="top">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
   `
 })
 export class ReportHistoryComponent {

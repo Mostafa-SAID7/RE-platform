@@ -12,39 +12,60 @@
 
     <!-- Error Message -->
     @if (errorMessage()) {
-      <app-alert
-        type="error"
-        title="Login Failed"
-        [message]="errorMessage()"
-        [closeable]="true"
-        (close)="errorMessage.set('')">
-      </app-alert>
+      <p-message severity="error" [text]="errorMessage()" styleClass="w-full"></p-message>
     }
 
     <!-- Login Form -->
     <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="space-y-4">
         <!-- Email Field -->
-        <app-input
-          id="email"
-          type="email"
-          label="Email address"
-          placeholder="you@example.com"
-          formControlName="email"
-          [error]="email?.invalid && email?.touched ? (email?.errors?.['required'] ? 'Email is required' : email?.errors?.['email'] ? 'Please enter a valid email' : '') : ''"
-          [required]="true">
-        </app-input>
+        <div class="flex flex-col gap-2">
+          <label for="email" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Email address <span class="text-red-500">*</span>
+          </label>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            formControlName="email"
+            class="w-full"
+            [class.ng-invalid]="email?.invalid && email?.touched">
+          @if (email?.invalid && email?.touched) {
+            <small class="text-red-600 dark:text-red-400">
+              @if (email?.errors?.['required']) {
+                Email is required
+              } @else if (email?.errors?.['email']) {
+                Please enter a valid email
+              }
+            </small>
+          }
+        </div>
 
         <!-- Password Field -->
-        <app-input
-          id="password"
-          type="password"
-          label="Password"
-          placeholder="Enter your password"
-          formControlName="password"
-          [error]="password?.invalid && password?.touched ? (password?.errors?.['required'] ? 'Password is required' : password?.errors?.['minlength'] ? 'Password must be at least 6 characters' : '') : ''"
-          [required]="true">
-        </app-input>
+        <div class="flex flex-col gap-2">
+          <label for="password" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Password <span class="text-red-500">*</span>
+          </label>
+          <p-password
+            id="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            [toggleMask]="true"
+            [feedback]="false"
+            styleClass="w-full"
+            [class.ng-invalid]="password?.invalid && password?.touched">
+          </p-password>
+          @if (password?.invalid && password?.touched) {
+            <small class="text-red-600 dark:text-red-400">
+              @if (password?.errors?.['required']) {
+                Password is required
+              } @else if (password?.errors?.['minlength']) {
+                Password must be at least 6 characters
+              }
+            </small>
+          }
+        </div>
       </div>
 
       <!-- Forgot Password Link -->
@@ -57,14 +78,14 @@
       </div>
 
       <!-- Submit Button -->
-      <app-button
+      <p-button
         label="Sign in"
         type="submit"
-        variant="primary"
-        [fullWidth]="true"
         [loading]="isLoading()"
-        [disabled]="isLoading()">
-      </app-button>
+        [disabled]="isLoading()"
+        styleClass="w-full"
+        severity="primary">
+      </p-button>
     </form>
   </div>
 </div>

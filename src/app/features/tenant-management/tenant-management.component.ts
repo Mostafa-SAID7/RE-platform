@@ -6,12 +6,14 @@ import { Store } from '@ngrx/store';
 import { debounceTime, Subject } from 'rxjs';
 import { TenantListComponent } from './components/tenant-list.component';
 import { Tenant } from '../../models/tenant.model';
-import { InputComponent, ButtonComponent, EmptyStateComponent } from '../../shared/ui';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-tenant-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, TenantListComponent, InputComponent, ButtonComponent, EmptyStateComponent],
+  imports: [CommonModule, FormsModule, TenantListComponent, InputTextModule, ButtonModule, MessageModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="p-6 bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-200">
@@ -21,22 +23,24 @@ import { InputComponent, ButtonComponent, EmptyStateComponent } from '../../shar
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Tenant Management</h1>
           <p class="text-gray-600 dark:text-gray-400 mt-2">Manage all tenants and their information</p>
         </div>
-        <app-button
+        <p-button
           label="+ Add Tenant"
-          variant="primary"
+          icon="pi pi-plus"
           (click)="addTenant()">
-        </app-button>
+        </p-button>
       </div>
 
       <!-- Search and Filters -->
       <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md dark:shadow-lg p-4 mb-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-        <app-input
-          id="search"
-          type="text"
-          placeholder="Search by name, email, or city..."
-          [(ngModel)]="searchQuery"
-          (valueChange)="onSearchChange($event)">
-        </app-input>
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-search"></i>
+          <input pInputText
+            type="text"
+            placeholder="Search by name, email, or city..."
+            [(ngModel)]="searchQuery"
+            (ngModelChange)="onSearchChange($event)"
+            class="w-full">
+        </span>
         <p class="text-sm text-gray-600 dark:text-gray-400 mt-3">
           Showing {{ filteredTenants().length }} of {{ tenants().length }} tenants
         </p>
@@ -51,19 +55,23 @@ import { InputComponent, ButtonComponent, EmptyStateComponent } from '../../shar
       </div>
 
       <ng-template #noTenants>
-        <app-empty-state
-          title="No tenants found"
-          description="Start by adding a new tenant to your portfolio"
-          icon="users"
-          actionLabel="Add Tenant"
-          (action)="addTenant()">
-        </app-empty-state>
+        <p-message
+          severity="info"
+          text="No tenants found. Start by adding a new tenant to your portfolio."
+          [styleClass]="'w-full'">
+        </p-message>
       </ng-template>
     </div>
   `,
   styles: [`
     :host {
       display: block;
+    }
+    ::ng-deep .p-input-icon-left > input {
+      padding-left: 2.5rem;
+    }
+    ::ng-deep .p-input-icon-left > i {
+      left: 0.75rem;
     }
   `]
 })

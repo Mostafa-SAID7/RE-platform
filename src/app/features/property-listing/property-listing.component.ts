@@ -7,12 +7,14 @@ import { debounceTime, Subject } from 'rxjs';
 import { PropertyCardComponent } from './components/property-card.component';
 import { FilterPanelComponent, PropertyFilters } from './components/filter-panel.component';
 import { Property } from '../../models/property.model';
-import { InputComponent, EmptyStateComponent } from '../../shared/ui';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-property-listing',
   standalone: true,
-  imports: [CommonModule, FormsModule, PropertyCardComponent, FilterPanelComponent, InputComponent, EmptyStateComponent],
+  imports: [CommonModule, FormsModule, PropertyCardComponent, FilterPanelComponent, InputTextModule, ButtonModule, MessageModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="p-4 md:p-6 bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-200">
@@ -36,14 +38,15 @@ import { InputComponent, EmptyStateComponent } from '../../shared/ui';
           <!-- Search and Controls -->
           <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md dark:shadow-lg p-4 mb-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
             <div class="flex gap-4 mb-4 flex-col md:flex-row">
-              <app-input
-                id="search"
-                type="text"
-                placeholder="Search by address or property name..."
-                [(ngModel)]="searchQuery"
-                (valueChange)="onSearchChange($event)"
-                class="flex-1">
-              </app-input>
+              <span class="p-input-icon-left flex-1">
+                <i class="pi pi-search"></i>
+                <input pInputText
+                  type="text"
+                  placeholder="Search by address or property name..."
+                  [(ngModel)]="searchQuery"
+                  (ngModelChange)="onSearchChange($event)"
+                  class="w-full">
+              </span>
               
               <select [(ngModel)]="sortField"
                       (ngModelChange)="applySorting($event)"
@@ -79,14 +82,18 @@ import { InputComponent, EmptyStateComponent } from '../../shared/ui';
                 {{ selectedProperties().size }} properties selected
               </p>
               <div class="flex gap-2 flex-wrap">
-                <button (click)="exportSelected('csv')"
-                        class="px-4 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-md text-sm hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors">
-                  Export CSV
-                </button>
-                <button (click)="exportSelected('excel')"
-                        class="px-4 py-2 bg-green-600 dark:bg-green-700 text-white rounded-md text-sm hover:bg-green-700 dark:hover:bg-green-600 transition-colors">
-                  Export Excel
-                </button>
+                <p-button
+                  label="Export CSV"
+                  icon="pi pi-download"
+                  (click)="exportSelected('csv')"
+                  severity="info">
+                </p-button>
+                <p-button
+                  label="Export Excel"
+                  icon="pi pi-download"
+                  (click)="exportSelected('excel')"
+                  severity="success">
+                </p-button>
               </div>
             </div>
           </div>
@@ -103,13 +110,11 @@ import { InputComponent, EmptyStateComponent } from '../../shared/ui';
           </div>
 
           <ng-template #noProperties>
-            <app-empty-state
-              title="No properties found"
-              description="Try adjusting your filters or search criteria"
-              icon="folder"
-              actionLabel="Clear filters"
-              (action)="clearFilters()">
-            </app-empty-state>
+            <p-message
+              severity="info"
+              text="No properties found. Try adjusting your filters or search criteria."
+              [styleClass]="'w-full'">
+            </p-message>
           </ng-template>
         </div>
       </div>
@@ -118,6 +123,12 @@ import { InputComponent, EmptyStateComponent } from '../../shared/ui';
   styles: [`
     :host {
       display: block;
+    }
+    ::ng-deep .p-input-icon-left > input {
+      padding-left: 2.5rem;
+    }
+    ::ng-deep .p-input-icon-left > i {
+      left: 0.75rem;
     }
   `]
 })

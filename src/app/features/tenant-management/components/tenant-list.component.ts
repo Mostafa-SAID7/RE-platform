@@ -1,44 +1,52 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
 import { Tenant } from '../../../models/tenant.model';
 
 @Component({
   selector: 'app-tenant-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TableModule, ButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-md dark:shadow-lg overflow-hidden border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-      <table class="w-full">
-        <thead class="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-          <tr>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Name</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Email</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Phone</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">City</th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-          <tr *ngFor="let tenant of tenants" class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-            <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">{{ tenant.name }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">{{ tenant.email }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">{{ tenant.phone }}</td>
-            <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">{{ tenant.address.city }}</td>
-            <td class="px-6 py-4 text-sm">
-              <button (click)="viewTenant(tenant)"
-                      class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors">
-                View
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div *ngIf="tenants.length === 0" class="text-center py-12">
-        <p class="text-gray-500 dark:text-gray-400">No tenants found</p>
-      </div>
-    </div>
+    <p-table [value]="tenants" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+          <th pSortableColumn="phone">Phone <p-sortIcon field="phone"></p-sortIcon></th>
+          <th pSortableColumn="address.city">City <p-sortIcon field="address.city"></p-sortIcon></th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-tenant>
+        <tr>
+          <td>{{ tenant.name }}</td>
+          <td>{{ tenant.email }}</td>
+          <td>{{ tenant.phone }}</td>
+          <td>{{ tenant.address.city }}</td>
+          <td>
+            <p-button
+              icon="pi pi-eye"
+              [rounded]="true"
+              [text]="true"
+              severity="info"
+              (click)="viewTenant(tenant)"
+              pTooltip="View Details"
+              tooltipPosition="top">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center py-4">
+            <p class="text-gray-500 dark:text-gray-400">No tenants found</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
   `,
   styles: [`
     :host {

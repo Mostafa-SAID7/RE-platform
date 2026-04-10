@@ -6,12 +6,14 @@ import { Observable } from 'rxjs';
 import { FinancialService } from '../../services/financial.service';
 import { selectFinancialSummary, selectFinancialsIsLoading } from '../../store/financials/financials.selectors';
 import { loadFinancialSummary } from '../../store/financials/financials.actions';
-import { SelectComponent, ButtonComponent } from '../../shared/ui';
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-financial-analytics',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, SelectComponent, ButtonComponent],
+  imports: [CommonModule, ReactiveFormsModule, SelectModule, ButtonModule, CardModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="p-6 bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-200">
@@ -23,84 +25,102 @@ import { SelectComponent, ButtonComponent } from '../../shared/ui';
         </div>
 
         <!-- Period Selector -->
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 mb-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
+        <p-card class="mb-6">
           <form [formGroup]="periodForm" class="flex gap-4 items-end">
             <div class="flex-1">
-              <app-select
+              <label for="period" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Period</label>
+              <p-select
                 id="period"
-                label="Period"
                 formControlName="period"
-                [options]="periodOptions">
-              </app-select>
+                [options]="periodOptions"
+                optionLabel="label"
+                optionValue="value">
+              </p-select>
             </div>
-            <app-button
+            <p-button
               label="Load Data"
-              variant="primary"
+              icon="pi pi-refresh"
               (click)="loadMetrics()">
-            </app-button>
+            </p-button>
           </form>
-        </div>
+        </p-card>
 
         <!-- Summary Metrics -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium">Total Revenue</h3>
-            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ totalRevenue() | currency }}</p>
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="text-gray-600 dark:text-gray-400 text-sm font-medium">Total Revenue</div>
+            </ng-template>
+            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ totalRevenue() | currency }}</p>
             <p class="text-green-600 dark:text-green-400 text-sm mt-2">+12% from last period</p>
-          </div>
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium">Total Expenses</h3>
-            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ totalExpenses() | currency }}</p>
+          </p-card>
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="text-gray-600 dark:text-gray-400 text-sm font-medium">Total Expenses</div>
+            </ng-template>
+            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ totalExpenses() | currency }}</p>
             <p class="text-red-600 dark:text-red-400 text-sm mt-2">+5% from last period</p>
-          </div>
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium">Net Profit</h3>
-            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ netProfit() | currency }}</p>
+          </p-card>
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="text-gray-600 dark:text-gray-400 text-sm font-medium">Net Profit</div>
+            </ng-template>
+            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ netProfit() | currency }}</p>
             <p class="text-green-600 dark:text-green-400 text-sm mt-2">+18% from last period</p>
-          </div>
+          </p-card>
         </div>
 
         <!-- Charts Section -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Revenue Breakdown</h2>
+          <p-card>
+            <ng-template pTemplate="header">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Revenue Breakdown</h2>
+            </ng-template>
             <div class="h-64 bg-gray-100 dark:bg-gray-800 rounded flex items-center justify-center">
               <p class="text-gray-500 dark:text-gray-400">Revenue chart placeholder</p>
             </div>
-          </div>
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Expense Breakdown</h2>
+          </p-card>
+          <p-card>
+            <ng-template pTemplate="header">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Expense Breakdown</h2>
+            </ng-template>
             <div class="h-64 bg-gray-100 dark:bg-gray-800 rounded flex items-center justify-center">
               <p class="text-gray-500 dark:text-gray-400">Expense chart placeholder</p>
             </div>
-          </div>
+          </p-card>
         </div>
 
         <!-- ROI and Cash Flow -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">ROI by Property</h2>
+          <p-card>
+            <ng-template pTemplate="header">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">ROI by Property</h2>
+            </ng-template>
             <div class="h-64 bg-gray-100 dark:bg-gray-800 rounded flex items-center justify-center">
               <p class="text-gray-500 dark:text-gray-400">ROI chart placeholder</p>
             </div>
-          </div>
-          <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Cash Flow Analysis</h2>
+          </p-card>
+          <p-card>
+            <ng-template pTemplate="header">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Cash Flow Analysis</h2>
+            </ng-template>
             <div class="h-64 bg-gray-100 dark:bg-gray-800 rounded flex items-center justify-center">
               <p class="text-gray-500 dark:text-gray-400">Cash flow chart placeholder</p>
             </div>
-          </div>
+          </p-card>
         </div>
 
         <!-- Export Section -->
-        <div class="bg-white dark:bg-gray-900 rounded-lg shadow dark:shadow-lg p-6 mt-6 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Export Report</h2>
+        <p-card class="mt-6">
+          <ng-template pTemplate="header">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Export Report</h2>
+          </ng-template>
           <div class="flex gap-4">
-            <app-button label="Export as PDF" variant="success" (click)="exportPDF()"></app-button>
-            <app-button label="Export as Excel" variant="primary" (click)="exportExcel()"></app-button>
-            <app-button label="Export as CSV" variant="secondary" (click)="exportCSV()"></app-button>
+            <p-button label="Export as PDF" severity="success" (click)="exportPDF()"></p-button>
+            <p-button label="Export as Excel" (click)="exportExcel()"></p-button>
+            <p-button label="Export as CSV" severity="secondary" (click)="exportCSV()"></p-button>
           </div>
-        </div>
+        </p-card>
       </div>
     </div>
   `
@@ -108,7 +128,6 @@ import { SelectComponent, ButtonComponent } from '../../shared/ui';
 export class FinancialAnalyticsComponent implements OnInit {
   private store = inject(Store);
   private fb = inject(FormBuilder);
-  private financialService = inject(FinancialService);
 
   periodForm: FormGroup;
   financialMetrics$: Observable<any>;
@@ -146,7 +165,6 @@ export class FinancialAnalyticsComponent implements OnInit {
   }
 
   loadMetrics(): void {
-    const period = this.periodForm.get('period')?.value || 'month';
     this.store.dispatch(loadFinancialSummary({}));
   }
 
