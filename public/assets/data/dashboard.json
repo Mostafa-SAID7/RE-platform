@@ -1,0 +1,119 @@
+{
+  "success": true,
+  "data": {
+    "summary": {
+      "totalProperties": 5,
+      "occupiedProperties": 4,
+      "vacantProperties": 1,
+      "totalTenants": 5,
+      "activeLeases": 5,
+      "expiredLeases": 0,
+      "monthlyRevenue": 25700,
+      "monthlyExpenses": 7800,
+      "monthlyNetIncome": 17900,
+      "occupancyRate": 80,
+      "averageRentPerProperty": 5140
+    },
+    "recentActivity": [
+      {
+        "id": "activity-001",
+        "type": "payment",
+        "description": "Rent payment received from John Smith",
+        "amount": 3500,
+        "date": "2026-03-21T14:15:00Z",
+        "status": "completed"
+      },
+      {
+        "id": "activity-002",
+        "type": "work_order",
+        "description": "HVAC maintenance started at Suburban Family Home",
+        "amount": 450,
+        "date": "2026-03-22T08:00:00Z",
+        "status": "in-progress"
+      },
+      {
+        "id": "activity-003",
+        "type": "tenant",
+        "description": "New tenant inquiry for Beachfront Condo",
+        "amount": 0,
+        "date": "2026-03-20T10:30:00Z",
+        "status": "pending"
+      },
+      {
+        "id": "activity-004",
+        "type": "inspection",
+        "description": "Property inspection completed for Commercial Office Space",
+        "amount": 0,
+        "date": "2026-03-19T15:45:00Z",
+        "status": "completed"
+      },
+      {
+        "id": "activity-005",
+        "type": "maintenance",
+        "description": "Carpet cleaning completed at Commercial Office Space",
+        "amount": 800,
+        "date": "2026-03-19T12:00:00Z",
+        "status": "completed"
+      }
+    ],
+    "upcomingDueDates": [
+      {
+        "id": "due-001",
+        "type": "inspection",
+        "propertyName": "Downtown Luxury Apartment",
+        "dueDate": "2026-09-15",
+        "daysUntilDue": 178
+      },
+      {
+        "id": "due-002",
+        "type": "lease_renewal",
+        "propertyName": "Downtown Luxury Apartment",
+        "dueDate": "2026-01-14",
+        "daysUntilDue": -88
+      },
+      {
+        "id": "due-003",
+        "type": "inspection",
+        "propertyName": "Suburban Family Home",
+        "dueDate": "2026-08-20",
+        "daysUntilDue": 152
+      },
+      {
+        "id": "due-004",
+        "type": "inspection",
+        "propertyName": "Commercial Office Space",
+        "dueDate": "2026-07-10",
+        "daysUntilDue": 112
+      },
+      {
+        "id": "due-005",
+        "type": "inspection",
+        "propertyName": "Beachfront Condo",
+        "dueDate": "2026-09-01",
+        "daysUntilDue": 164
+      }
+    ],
+    "charts": {
+      "monthlyRevenue": [
+        { "month": "2025-11", "revenue": 24500 },
+        { "month": "2025-12", "revenue": 25200 },
+        { "month": "2026-01", "revenue": 25700 },
+        { "month": "2026-02", "revenue": 25700 },
+        { "month": "2026-03", "revenue": 25700 }
+      ],
+      "occupancyTrend": [
+        { "month": "2025-11", "rate": 75 },
+        { "month": "2025-12", "rate": 78 },
+        { "month": "2026-01", "rate": 80 },
+        { "month": "2026-02", "rate": 80 },
+        { "month": "2026-03", "rate": 80 }
+      ],
+      "propertyTypeDistribution": [
+        { "type": "apartment", "count": 1, "percentage": 20 },
+        { "type": "house", "count": 2, "percentage": 40 },
+        { "type": "commercial", "count": 1, "percentage": 20 },
+        { "type": "condo", "count": 1, "percentage": 20 }
+      ]
+    }
+  }
+}

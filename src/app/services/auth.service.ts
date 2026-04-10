@@ -229,12 +229,17 @@ export class AuthService {
    */
   private getUserFromStorage(): User | null {
     const userData = localStorage.getItem(this.USER_KEY);
-    if (!userData) return null;
+    
+    // Check if userData is null, empty, or the string "undefined"
+    if (!userData || userData === 'undefined') {
+      return null;
+    }
 
     try {
       return JSON.parse(userData) as User;
     } catch (error) {
       console.error('Failed to parse user data:', error);
+      localStorage.removeItem(this.USER_KEY);
       return null;
     }
   }

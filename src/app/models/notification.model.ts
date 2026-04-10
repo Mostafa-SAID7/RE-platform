@@ -1,15 +1,16 @@
 export interface Notification {
   id: string;
-  userId: string;
-  type: NotificationType;
+  userId?: string;
+  type: NotificationType | 'error' | 'success';
   title: string;
   message: string;
-  severity: NotificationSeverity;
+  severity?: NotificationSeverity;
   read: boolean;
   actionUrl?: string;
   relatedEntityId?: string;
   relatedEntityType?: string;
   createdAt: Date;
+  updatedAt?: Date;
   readAt?: Date;
 }
 

@@ -9,8 +9,408 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-200;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(209, 213, 219);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(156, 163, 175);
+  background-clip: content-box;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgb(55, 65, 81);
+  background-clip: content-box;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(75, 85, 99);
+  background-clip: content-box;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: rgb(209, 213, 219) transparent;
+  scrollbar-width: thin;
+}
+
+.dark * {
+  scrollbar-color: rgb(55, 65, 81) transparent;
+}
+
+/* Smooth transitions */
+@layer components {
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition-colors font-medium;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-lg transition-colors;
+  }
+
+  .input-field {
+    @apply px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors;
+  }
+
+  /* Material Datepicker Component Styles - Centralized with Tailwind */
+  .mat-calendar {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-lg dark:shadow-xl p-4;
+  }
+
+  .mat-calendar-body {
+    @apply p-2;
+  }
+
+  .mat-calendar-body-cell {
+    @apply text-gray-700 dark:text-gray-300 p-1;
+  }
+
+  .mat-calendar-body-cell-content {
+    @apply rounded w-8 h-8 flex items-center justify-center;
+  }
+
+  .mat-calendar-body-selected {
+    @apply bg-blue-600 text-white rounded;
+  }
+
+  .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+    @apply border border-blue-600;
+  }
+
+  .mat-calendar-body-label {
+    @apply text-gray-700 dark:text-gray-300 p-2;
+  }
+
+  .mat-calendar-period-button {
+    @apply text-gray-700 dark:text-gray-300 p-2;
+  }
+
+  .mat-calendar-arrow {
+    @apply border-gray-700 dark:border-gray-300;
+  }
+
+  .mat-datepicker-toggle-default-icon {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  .mat-datepicker-panel {
+    @apply bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700;
+  }
+
+  .mat-calendar-header {
+    @apply p-2;
+  }
+
+  .mat-calendar-body-row {
+    @apply flex justify-center;
+  }
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.animate-slide-in-top {
+  animation: slideInFromTop 0.2s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 0.2s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.2s ease-out;
+}
+
+.animate-slide-in-bottom {
+  animation: slideInFromBottom 0.2s ease-out;
+}
+
+/* Date Picker Calendar Styling */
+input[type="date"] {
+  color-scheme: light dark;
+}
+
+/* Calendar picker icon styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+  transition: opacity 0.2s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Dark mode calendar styling */
+@media (prefers-color-scheme: dark) {
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+/* Calendar popup styling for Chrome/Edge */
+input[type="date"]::-webkit-datetime-edit {
+  padding: 0;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: inherit;
+  padding: 0 0.2em;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: inherit;
+  padding: 0;
+}
+
+/* Firefox date input styling */
+input[type="date"] {
+  appearance: textfield;
+}
+
+input[type="date"]::-moz-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+  transition: opacity 0.2s ease;
+}
+
+input[type="date"]::-moz-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Material Datepicker Overlay Positioning */
+.cdk-overlay-pane {
+  z-index: 9999 !important;
+  position: fixed !important;
+}
+
+.mat-datepicker-container {
+  z-index: 9999 !important;
+}
+
+.cdk-overlay-connected-position-bounding-box {
+  position: fixed !important;
+}
+
+.cdk-overlay-pane.mat-datepicker-panel {
+  max-width: none !important;
+}
+
+
+/* Material Calendar Content Overflow Fix */
+.mat-calendar-content {
+  @apply overflow-visible;
+}
+
+.mat-calendar-body {
+  @apply overflow-visible;
+}
+
+.mat-calendar-table {
+  @apply w-full border-collapse;
+}
+
+.mat-calendar-table tbody {
+  @apply block;
+}
+
+.mat-calendar-table tr {
+  @apply flex justify-between mb-1;
+}
+
+.mat-calendar-table td {
+  @apply flex-1 text-center;
+}
+
+/* Ensure datepicker panel has proper sizing */
+.mat-datepicker-panel {
+  min-width: 320px !important;
+  max-width: 400px !important;
+}
+
+.mat-datepicker-panel-above {
+  margin-bottom: 8px;
+}
+
+.mat-datepicker-panel-below {
+  margin-top: 8px;
+}
+
+
+/* Material Datepicker Backdrop - Close on click outside */
+.cdk-overlay-backdrop {
+  @apply cursor-pointer;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-show {
+  @apply opacity-0 pointer-events-auto;
+}
+
+/* Ensure datepicker closes on backdrop click */
+.cdk-overlay-pane.mat-datepicker-panel {
+  pointer-events: auto;
+}
+
+/* Add click handler for backdrop */
+.cdk-overlay-backdrop.cdk-overlay-backdrop-show {
+  background-color: transparent;
+}
+
+
+
+/* Sidebar Scrollbar Hiding */
+aside.w-20 {
+  overflow: hidden !important;
+}
+
+aside.w-20::-webkit-scrollbar {
+  display: none;
+}
+
+aside.w-20 {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+/* Header and Sidebar Animations */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: slideInFromTop 0.2s ease-out;
+}
+
+/* Scrollbar Styling for Sidebar */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgb(209, 213, 219);
+  border-radius: 3px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgb(55, 65, 81);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(156, 163, 175);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(75, 85, 99);
 }

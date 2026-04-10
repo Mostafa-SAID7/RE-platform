@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { InputComponent, ButtonComponent, AlertComponent } from '../../../shared/ui';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, InputComponent, ButtonComponent, AlertComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -19,7 +20,6 @@ export class LoginComponent {
   loginForm: FormGroup;
   isLoading = signal<boolean>(false);
   errorMessage = signal<string>('');
-  showPassword = signal<boolean>(false);
 
   constructor() {
     this.loginForm = this.fb.group({
@@ -34,10 +34,6 @@ export class LoginComponent {
 
   get password() {
     return this.loginForm.get('password');
-  }
-
-  togglePasswordVisibility(): void {
-    this.showPassword.set(!this.showPassword());
   }
 
   onSubmit(): void {

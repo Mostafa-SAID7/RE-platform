@@ -1,0 +1,83 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "fin-001",
+      "propertyId": "prop-001",
+      "month": "2026-03",
+      "rentCollected": 3500,
+      "rentExpected": 3500,
+      "maintenanceCosts": 250,
+      "utilities": 150,
+      "insurance": 100,
+      "propertyTax": 300,
+      "otherExpenses": 50,
+      "totalExpenses": 850,
+      "netIncome": 2650,
+      "occupancyRate": 100
+    },
+    {
+      "id": "fin-002",
+      "propertyId": "prop-002",
+      "month": "2026-03",
+      "rentCollected": 4200,
+      "rentExpected": 4200,
+      "maintenanceCosts": 400,
+      "utilities": 200,
+      "insurance": 150,
+      "propertyTax": 450,
+      "otherExpenses": 100,
+      "totalExpenses": 1300,
+      "netIncome": 2900,
+      "occupancyRate": 100
+    },
+    {
+      "id": "fin-003",
+      "propertyId": "prop-003",
+      "month": "2026-03",
+      "rentCollected": 8500,
+      "rentExpected": 8500,
+      "maintenanceCosts": 800,
+      "utilities": 500,
+      "insurance": 300,
+      "propertyTax": 1000,
+      "otherExpenses": 200,
+      "totalExpenses": 2800,
+      "netIncome": 5700,
+      "occupancyRate": 100
+    },
+    {
+      "id": "fin-004",
+      "propertyId": "prop-004",
+      "month": "2026-03",
+      "rentCollected": 4000,
+      "rentExpected": 4000,
+      "maintenanceCosts": 300,
+      "utilities": 180,
+      "insurance": 120,
+      "propertyTax": 350,
+      "otherExpenses": 50,
+      "totalExpenses": 1000,
+      "netIncome": 3000,
+      "occupancyRate": 100
+    },
+    {
+      "id": "fin-005",
+      "propertyId": "prop-005",
+      "month": "2026-03",
+      "rentCollected": 5500,
+      "rentExpected": 5500,
+      "maintenanceCosts": 600,
+      "utilities": 300,
+      "insurance": 200,
+      "propertyTax": 600,
+      "otherExpenses": 150,
+      "totalExpenses": 1850,
+      "netIncome": 3650,
+      "occupancyRate": 100
+    }
+  ],
+  "total": 5,
+  "page": 1,
+  "pageSize": 10
+}

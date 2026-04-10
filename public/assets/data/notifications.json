@@ -1,0 +1,58 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "notif-001",
+      "userId": "user-001",
+      "type": "work_order",
+      "title": "New Work Order Assigned",
+      "message": "A new work order has been assigned to you: Fix leaky kitchen faucet",
+      "read": false,
+      "createdDate": "2026-03-22T10:30:00Z",
+      "actionUrl": "/work-orders/wo-001"
+    },
+    {
+      "id": "notif-002",
+      "userId": "user-001",
+      "type": "payment",
+      "title": "Rent Payment Received",
+      "message": "Rent payment of $3,500 received from John Smith for Downtown Luxury Apartment",
+      "read": false,
+      "createdDate": "2026-03-21T14:15:00Z",
+      "actionUrl": "/financials"
+    },
+    {
+      "id": "notif-003",
+      "userId": "user-001",
+      "type": "maintenance",
+      "title": "Maintenance Alert",
+      "message": "HVAC system maintenance is in progress at Suburban Family Home",
+      "read": true,
+      "createdDate": "2026-03-20T09:00:00Z",
+      "actionUrl": "/work-orders/wo-002"
+    },
+    {
+      "id": "notif-004",
+      "userId": "user-001",
+      "type": "tenant",
+      "title": "Tenant Issue",
+      "message": "Tenant Maria Garcia has submitted a maintenance request",
+      "read": true,
+      "createdDate": "2026-03-19T16:45:00Z",
+      "actionUrl": "/tenants/tenant-004"
+    },
+    {
+      "id": "notif-005",
+      "userId": "user-001",
+      "type": "inspection",
+      "title": "Inspection Due",
+      "message": "Property inspection is due for Downtown Luxury Apartment",
+      "read": false,
+      "createdDate": "2026-03-18T11:20:00Z",
+      "actionUrl": "/properties/prop-001"
+    }
+  ],
+  "total": 5,
+  "page": 1,
+  "pageSize": 10
+}

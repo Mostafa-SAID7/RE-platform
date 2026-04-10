@@ -1,0 +1,24 @@
+<div class="p-6 bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-200">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Reports</h1>
+      <p class="text-gray-600 dark:text-gray-400 mt-2">Generate and manage reports</p>
+    </div>
+
+    <!-- Report Templates -->
+    <app-report-templates></app-report-templates>
+
+    <!-- Custom Report Builder -->
+    <app-custom-report-builder
+      [form]="customReportForm"
+      [propertyOptions]="propertyOptions"
+      [selectedMetrics]="selectedMetrics"
+      (preview)="previewReport()"
+      (generate)="generateReport()">
+    </app-custom-report-builder>
+
+    <!-- Report History -->
+    <app-report-history></app-report-history>
+  </div>
+</div>
