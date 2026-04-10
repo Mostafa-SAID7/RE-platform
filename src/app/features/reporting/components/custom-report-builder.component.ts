@@ -35,34 +35,39 @@ interface PropertyOption {
       <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Custom Report Builder</h2>
       <form [formGroup]="form" class="space-y-4">
         <!-- Date Range Picker -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="flex flex-col relative">
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Date</label>
-            <div class="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-500 dark:focus-within:ring-blue-400">
-              <input 
-                matInput 
-                [matDatepicker]="startPicker" 
-                formControlName="startDate"
-                class="flex-1 bg-transparent text-gray-900 dark:text-white outline-none"
-                placeholder="Select start date">
-              <mat-datepicker-toggle [for]="startPicker" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"></mat-datepicker-toggle>
-              <mat-datepicker #startPicker="matDatepicker"></mat-datepicker>
+        <fieldset class="border-0 p-0 m-0">
+          <legend class="sr-only">Date Range</legend>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col relative">
+              <label for="startDate" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Date</label>
+              <div class="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-500 dark:focus-within:ring-blue-400">
+                <input 
+                  id="startDate"
+                  matInput 
+                  [matDatepicker]="startPicker" 
+                  formControlName="startDate"
+                  class="flex-1 bg-transparent text-gray-900 dark:text-white outline-none"
+                  placeholder="Select start date">
+                <mat-datepicker-toggle [for]="startPicker" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker="matDatepicker"></mat-datepicker>
+              </div>
+            </div>
+            <div class="flex flex-col relative">
+              <label for="endDate" class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Date</label>
+              <div class="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-500 dark:focus-within:ring-blue-400">
+                <input 
+                  id="endDate"
+                  matInput 
+                  [matDatepicker]="endPicker" 
+                  formControlName="endDate"
+                  class="flex-1 bg-transparent text-gray-900 dark:text-white outline-none"
+                  placeholder="Select end date">
+                <mat-datepicker-toggle [for]="endPicker" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker="matDatepicker"></mat-datepicker>
+              </div>
             </div>
           </div>
-          <div class="flex flex-col relative">
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Date</label>
-            <div class="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 focus-within:ring-2 focus-within:ring-blue-500 dark:focus-within:ring-blue-400">
-              <input 
-                matInput 
-                [matDatepicker]="endPicker" 
-                formControlName="endDate"
-                class="flex-1 bg-transparent text-gray-900 dark:text-white outline-none"
-                placeholder="Select end date">
-              <mat-datepicker-toggle [for]="endPicker" class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"></mat-datepicker-toggle>
-              <mat-datepicker #endPicker="matDatepicker"></mat-datepicker>
-            </div>
-          </div>
-        </div>
+        </fieldset>
 
         <app-select
           id="properties"

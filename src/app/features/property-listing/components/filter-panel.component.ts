@@ -27,8 +27,8 @@ export interface PropertyFilters {
       </div>
 
       <!-- Price Range -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Price Range</label>
+      <fieldset class="border-0 p-0 m-0 mb-6">
+        <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Price Range</legend>
         <div class="flex flex-col sm:flex-row gap-2">
           <app-input
             id="minPrice"
@@ -45,11 +45,11 @@ export interface PropertyFilters {
             class="flex-1">
           </app-input>
         </div>
-      </div>
+      </fieldset>
 
       <!-- Property Type -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Property Type</label>
+      <fieldset class="border-0 p-0 m-0 mb-6">
+        <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Property Type</legend>
         <div class="space-y-2">
           <app-checkbox
             id="residential"
@@ -70,11 +70,11 @@ export interface PropertyFilters {
             value="mixed-use">
           </app-checkbox>
         </div>
-      </div>
+      </fieldset>
 
       <!-- Occupancy Status -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Occupancy Status</label>
+      <fieldset class="border-0 p-0 m-0 mb-6">
+        <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Occupancy Status</legend>
         <div class="space-y-2">
           <app-checkbox
             id="occupied"
@@ -95,7 +95,7 @@ export interface PropertyFilters {
             value="maintenance">
           </app-checkbox>
         </div>
-      </div>
+      </fieldset>
 
       <!-- Apply Button -->
       <app-button

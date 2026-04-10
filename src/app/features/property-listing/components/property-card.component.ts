@@ -71,11 +71,12 @@ import { Property } from '../../../models/property.model';
         <!-- Checkbox for bulk selection -->
         <div class="mt-4 flex items-center">
           <input type="checkbox"
+                 [id]="'select-' + property.id"
                  [checked]="isSelected"
                  (change)="toggleSelection($event)"
                  (click)="$event.stopPropagation()"
                  class="w-4 h-4 text-blue-600 dark:text-blue-400 rounded accent-blue-600 dark:accent-blue-400">
-          <label class="ml-2 text-sm text-gray-600 dark:text-gray-400">Select for bulk action</label>
+          <label [for]="'select-' + property.id" class="ml-2 text-sm text-gray-600 dark:text-gray-400">Select for bulk action</label>
         </div>
       </div>
     </div>

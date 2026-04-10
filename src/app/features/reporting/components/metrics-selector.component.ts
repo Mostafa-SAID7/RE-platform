@@ -14,8 +14,8 @@ interface Metric {
   imports: [CommonModule, ReactiveFormsModule, CheckboxComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Metrics</label>
+    <fieldset class="border-0 p-0 m-0">
+      <legend class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Metrics</legend>
       <div class="space-y-2">
         <app-checkbox
           *ngFor="let metric of metrics"
@@ -24,7 +24,7 @@ interface Metric {
           [formControl]="getMetricControl(metric.id)">
         </app-checkbox>
       </div>
-    </div>
+    </fieldset>
   `
 })
 export class MetricsSelectorComponent {
