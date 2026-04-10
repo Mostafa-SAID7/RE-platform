@@ -1,18 +1,25 @@
 import { TestBed } from '@angular/core/testing';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { unsavedChangesGuard, ComponentWithUnsavedChanges } from './unsaved-changes.guard';
 
 describe('unsavedChangesGuard', () => {
   let mockComponent: jasmine.SpyObj<ComponentWithUnsavedChanges>;
+  let mockCurrentRoute: ActivatedRouteSnapshot;
+  let mockCurrentState: RouterStateSnapshot;
+  let mockNextState: RouterStateSnapshot;
 
   beforeEach(() => {
     mockComponent = jasmine.createSpyObj('ComponentWithUnsavedChanges', ['hasUnsavedChanges']);
+    mockCurrentRoute = {} as ActivatedRouteSnapshot;
+    mockCurrentState = { url: '/current' } as RouterStateSnapshot;
+    mockNextState = { url: '/next' } as RouterStateSnapshot;
   });
 
   it('should allow navigation when component has no unsaved changes', () => {
     mockComponent.hasUnsavedChanges.and.returnValue(false);
 
     const result = TestBed.runInInjectionContext(() => 
-      unsavedChangesGuard(mockComponent)
+      unsavedChangesGuard(mockComponent, mockCurrentRoute, mockCurrentState, mockNextState)
     );
 
     expect(result).toBe(true);
@@ -24,7 +31,7 @@ describe('unsavedChangesGuard', () => {
     spyOn(window, 'confirm').and.returnValue(true);
 
     const result = TestBed.runInInjectionContext(() => 
-      unsavedChangesGuard(mockComponent)
+      unsavedChangesGuard(mockComponent, mockCurrentRoute, mockCurrentState, mockNextState)
     );
 
     expect(result).toBe(true);
@@ -39,7 +46,7 @@ describe('unsavedChangesGuard', () => {
     spyOn(window, 'confirm').and.returnValue(false);
 
     const result = TestBed.runInInjectionContext(() => 
-      unsavedChangesGuard(mockComponent)
+      unsavedChangesGuard(mockComponent, mockCurrentRoute, mockCurrentState, mockNextState)
     );
 
     expect(result).toBe(false);
@@ -50,7 +57,7 @@ describe('unsavedChangesGuard', () => {
     const componentWithoutInterface = {} as ComponentWithUnsavedChanges;
 
     const result = TestBed.runInInjectionContext(() => 
-      unsavedChangesGuard(componentWithoutInterface)
+      unsavedChangesGuard(componentWithoutInterface, mockCurrentRoute, mockCurrentState, mockNextState)
     );
 
     expect(result).toBe(true);
@@ -58,7 +65,7 @@ describe('unsavedChangesGuard', () => {
 
   it('should allow navigation when component is null', () => {
     const result = TestBed.runInInjectionContext(() => 
-      unsavedChangesGuard(null as any)
+      unsavedChangesGuard(null as any, mockCurrentRoute, mockCurrentState, mockNextState)
     );
 
     expect(result).toBe(true);
