@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "dist/real-estate-platform"
+  publish = "dist/real-estate-platform/browser"
 
 [build.environment]
   NODE_VERSION = "22.14.0"
